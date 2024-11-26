@@ -9,7 +9,8 @@
     "@std/assert": "jsr:@std/assert@1",
     "@tajpouria/cors": "jsr:@tajpouria/cors@^1.2.1",
     "@zaubrik/djwt": "jsr:@zaubrik/djwt@^3.0.2",
-    "deno-postgres": "https://deno.land/x/postgres/mod.ts"
+    "deno-postgres": "https://deno.land/x/postgres/mod.ts",
+    "bcrypt": "https://deno.land/x/bcrypt/mod.ts"
   },
   "version": "0.1.0"
 }

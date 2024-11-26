@@ -1,8 +1,9 @@
 import { getApplication, getRouter } from "./src/libraries/http.ts";
-import { getRouter as getEventsRouter } from "./src/events/mod.ts";
+import { getRouter as getEventsRouter } from "./src/controllers/events/mod.ts";
 import { PATH_AUTH, PATH_EVENTS, PATH_VERSION_1 } from "./src/constants.ts";
 import { Entity, Event } from "./src/libraries/types.ts";
-import { router as routerAuth } from "./src/auth/mod.ts";
+import { getRouterAuth } from "./src/controllers/auth/mod.ts";
+import { getDatabasePsql } from "./src/database/psql/mod.ts";
 
 const eventsMock: Entity<Event>[] = [
   {
@@ -38,6 +39,10 @@ routerRoot.use(
     },
   }).routes(),
 );
+
+const database = await getDatabasePsql();
+
+const routerAuth = getRouterAuth(database);
 
 routerRoot.use(
   `${PATH_AUTH}`,

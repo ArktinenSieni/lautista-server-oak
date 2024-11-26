@@ -7,6 +7,5 @@ export type ApplicationStateAuthorized = ApplicationState & {
 };
 
 export type Auth = {
-  userId: string;
+  userId: number;
 };
-

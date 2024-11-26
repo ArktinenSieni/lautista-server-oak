@@ -1,58 +1,29 @@
-import { Client } from "deno-postgres";
+import { Client, Pool } from "deno-postgres";
 
-export function selectUsers() {
-  return withConnection(async (client) =>
-    await client.queryArray<[string]>(`SELECT username FROM Users`).then(
-      (result) => result.rows,
-    )
-  );
-}
+const POOL_CONNECTION_COUNT = 20;
 
-const client = new Client({
+const pool = new Pool({
   hostname: "localhost",
   port: "5432",
   database: "postgres",
   user: "postgres",
   password: "example",
-});
+}, POOL_CONNECTION_COUNT);
 
-async function withConnection<T>(fn: (client: Client) => Promise<T>) {
-  await client.connect();
+export async function withConnection<T>(fn: (client: Client) => Promise<T>) {
+  const client = await pool.connect();
 
-  await setupDatabase(client);
+  let result;
 
-  const result = await fn(client);
-
-  await client.end();
+  try {
+    result = await fn(client);
+  } catch (e) {
+    throw e;
+  } finally {
+    client.release();
+  }
 
   return result;
 }
 
-let isDatabaseInitialized = false;
-
-async function setupDatabase(client: Client) {
-  if (isDatabaseInitialized) {
-    return;
-  }
-
-  await setupExtensions(client);
-
-  await Promise.all([
-    createUsersTable(client),
-  ]);
-
-  isDatabaseInitialized = true;
-}
-
-async function setupExtensions(client: Client) {
-  await client.queryArray('CREATE EXTENSION IF NOT EXISTS "uuid-ossp"');
-}
-
-async function createUsersTable(client: Client) {
-  await client.queryArray(`
-    CREATE TABLE IF NOT EXISTS Users(
-      id        UUID PRIMARY KEY  DEFAULT gen_random_uuid(),
-      username  VARCHAR(50)       NOT NULL
-    )
-`);
-}
+export type { Client, Transaction } from "deno-postgres";

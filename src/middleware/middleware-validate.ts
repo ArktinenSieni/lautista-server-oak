@@ -23,7 +23,7 @@ export const validate: MiddlewareAuthorized = async (
   try {
     const payload = await getJwtPayload(token);
 
-    if (!payload.userId.length) {
+    if (payload.userId === undefined) {
       response.status = 400;
       response.body = {
         error: "Invalid token",

@@ -1,2 +1,2 @@
 export { isEvent } from "@lautista/types";
-export type { Entity, Event } from "@lautista/types";
+export type { Entity, Event, User } from "@lautista/types";

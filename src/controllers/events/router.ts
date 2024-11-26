@@ -1,6 +1,6 @@
 import type { DataSource } from "./types.ts";
-import { isEvent } from "../libraries/types.ts";
-import { getRouterAuthorized } from "../libraries/http.ts";
+import { isEvent } from "../../libraries/types.ts";
+import { getRouterAuthorized } from "../../libraries/http.ts";
 
 export function getRouter(dataSource: DataSource) {
   const router = getRouterAuthorized();

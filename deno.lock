@@ -106,6 +106,7 @@
     }
   },
   "redirects": {
+    "https://deno.land/x/bcrypt/mod.ts": "https://deno.land/x/bcrypt@v0.4.1/mod.ts",
     "https://deno.land/x/postgres/mod.ts": "https://deno.land/x/postgres@v0.19.3/mod.ts",
     "https://deno.land/x/postgresjs/mod.js": "https://deno.land/x/postgresjs@v3.4.5/mod.js"
   },
@@ -477,6 +478,11 @@
     "https://deno.land/std@0.214.0/path/windows/separator.ts": "e51c5522140eff4f8402617c5c68a201fdfa3a1a8b28dc23587cff931b665e43",
     "https://deno.land/std@0.214.0/path/windows/to_file_url.ts": "1cd63fd35ec8d1370feaa4752eccc4cc05ea5362a878be8dc7db733650995484",
     "https://deno.land/std@0.214.0/path/windows/to_namespaced_path.ts": "4ffa4fb6fae321448d5fe810b3ca741d84df4d7897e61ee29be961a6aac89a4c",
+    "https://deno.land/x/bcrypt@v0.4.1/mod.ts": "ff09bdae282583cf5f7d87efe37ddcecef7f14f6d12e8b8066a3058db8c6c2f7",
+    "https://deno.land/x/bcrypt@v0.4.1/src/bcrypt/base64.ts": "b8266450a4f1eb6960f60f2f7986afc4dde6b45bd2d7ee7ba10789e67e17b9f7",
+    "https://deno.land/x/bcrypt@v0.4.1/src/bcrypt/bcrypt.ts": "ec221648cc6453ea5e3803bc817c01157dada06aa6f7a0ba6b9f87aae32b21e2",
+    "https://deno.land/x/bcrypt@v0.4.1/src/main.ts": "08d201b289c8d9c46f8839c69cd6625b213863db29775c7a200afc3b540e64f8",
+    "https://deno.land/x/bcrypt@v0.4.1/src/worker.ts": "5a73bdfee9c9e622f47c9733d374b627dce52fb3ec1e74c8226698b3fc57ffac",
     "https://deno.land/x/postgres@v0.19.3/client.ts": "d141c65c20484c545a1119c9af7a52dcc24f75c1a5633de2b9617b0f4b2ed5c1",
     "https://deno.land/x/postgres@v0.19.3/client/error.ts": "05b0e35d65caf0ba21f7f6fab28c0811da83cd8b4897995a2f411c2c83391036",
     "https://deno.land/x/postgres@v0.19.3/connection/auth.ts": "db15c1659742ef4d2791b32834950278dc7a40cb931f8e434e6569298e58df51",

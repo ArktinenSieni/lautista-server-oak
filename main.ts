@@ -3,7 +3,7 @@ import { getRouter as getEventsRouter } from "./src/controllers/events/mod.ts";
 import { PATH_AUTH, PATH_EVENTS, PATH_VERSION_1 } from "./src/constants.ts";
 import { Entity, Event } from "./src/libraries/types.ts";
 import { getRouterAuth } from "./src/controllers/auth/mod.ts";
-import { getDatabasePsql } from "./src/database/psql/mod.ts";
+import { getUsersQueries } from "./src/libraries/database/mod.ts";
 
 const eventsMock: Entity<Event>[] = [
   {
@@ -40,8 +40,7 @@ routerRoot.use(
   }).routes(),
 );
 
-const database = await getDatabasePsql();
-
+const database = await getUsersQueries();
 const routerAuth = getRouterAuth(database);
 
 routerRoot.use(

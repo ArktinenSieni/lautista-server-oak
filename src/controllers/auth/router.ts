@@ -3,12 +3,11 @@ import { COOKIE_KEY_AUTH } from "../../constants.ts";
 import { getRouter } from "../../libraries/http.ts";
 import { validate } from "../../middleware/middleware-validate.ts";
 import { User } from "@lautista/types";
-import type { Database } from "../../database/types.ts";
 import { NotFoundError } from "../../errors.ts";
-import type { DbUser } from "../../database/mod.ts";
 import { testPassword } from "../../libraries/passwords.ts";
+import type { UsersInterface } from "../../libraries/database/mod.ts";
 
-export function getRouterAuth(database: DatabaseAuth) {
+export function getRouterAuth(database: UsersInterface) {
   const router = getRouter();
 
   router.post(
@@ -25,10 +24,14 @@ export function getRouterAuth(database: DatabaseAuth) {
         return;
       }
 
-      let user: DbUser;
+      let hash: string;
+      let id: number;
 
       try {
-        user = await database.getDbUserByUsername(body.username);
+        const loginInfo = await database.getHashAndIdByUsername(body.username);
+
+        hash = loginInfo.hash;
+        id = loginInfo.id;
       } catch (e) {
         if (e instanceof NotFoundError) {
           response.status = 401;
@@ -42,7 +45,7 @@ export function getRouterAuth(database: DatabaseAuth) {
         throw e;
       }
 
-      const isValidPassword = await testPassword(body.password, user.salt);
+      const isValidPassword = await testPassword(body.password, hash);
 
       if (!isValidPassword) {
         response.status = 401;
@@ -53,7 +56,7 @@ export function getRouterAuth(database: DatabaseAuth) {
         return;
       }
 
-      const auth = await getJwt({ userId: user.id });
+      const auth = await getJwt({ userId: id });
 
       await cookies.set(COOKIE_KEY_AUTH, auth);
       response.status = 200;
@@ -102,5 +105,3 @@ export function getRouterAuth(database: DatabaseAuth) {
 }
 
 const errorMessageUnauhtorized = "unauthorized :(";
-
-type DatabaseAuth = Pick<Database, "getDbUserByUsername" | "getUserById">;
